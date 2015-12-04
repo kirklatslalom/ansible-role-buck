@@ -14,9 +14,9 @@ Role Variables
 | Name                   | Default                           | Description                                 |
 |------------------------|-----------------------------------|---------------------------------------------|
 | buck_repository_url    | https://github.com/facebook/buck  | URL of buck git repository                  |
-| buck_installation_dir  | /opt/buck                         | Source installation directory               |
+| buck_installation_dir  | ~/buck                            | Source installation directory               |
 | buck_revision          | master                            | Revision of buck to check out               |
-| buck_bin_dir           | /usr/local/bin                    | Directory in which to symlink the binaries  |
+| buck_bin_dir           | ~/bin                             | Directory in which to symlink the binaries  |
 
 Example Playbook
 ----------------
