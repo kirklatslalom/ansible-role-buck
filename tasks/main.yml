@@ -19,7 +19,7 @@
 
 - name: Build Buck
   command: >
-    ant clean && ant
+    ant clean default
     chdir={{ buck_installation_dir }}
   tags: buck
 
