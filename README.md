@@ -32,7 +32,7 @@ Install Buck specifying version
 ```
 - hosts: all
   roles:
-    - { role: dpursehouse.buck, buck_version: ba9f239f69287a553ca93af76a27484d83693563 }
+    - { role: dpursehouse.buck, buck_revision: ba9f239f69287a553ca93af76a27484d83693563 }
 ```
 
 License
