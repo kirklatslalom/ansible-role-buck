@@ -1,30 +1,45 @@
 ---
 # tasks file for Buck
+- name: Ensure initialization directory exists.
+  file:
+    dest: "{{ ansible_env.HOME }}/.config/ansible/"
+    mode: 0700
+    owner: "{{ ansible_env.USER }}"
+    state: directory
+
+- name: Check if initialization has been done
+  stat: path={{ ansible_env.HOME }}/.config/ansible/.initialized_buck
+  register: initialized_buck
 
 - name: Create Buck installation directory
   file: >
     path={{ buck_installation_dir }}
     state=directory
   tags: buck
+  when: not initialized_buck.stat.exists
 
 - name: Clone Buck
   git: >
     repo={{ buck_repository_url }}
     dest={{ buck_installation_dir }}
     version={{ buck_revision }}
+    accept_hostkey=yes
   tags: buck
+  when: not initialized_buck.stat.exists
 
 - name: Build Buck
   command: >
     ant clean default
     chdir={{ buck_installation_dir }}
   tags: buck
+  when: not initialized_buck.stat.exists
 
 - name: Create Buck bin directory
   file: >
     path={{ buck_bin_dir }}
     state=directory
   tags: buck
+  when: not initialized_buck.stat.exists
 
 - name: Create buck symlink
   file: >
@@ -32,6 +47,7 @@
     dest={{ buck_bin_dir }}/buck
     state=link
   tags: buck
+  when: not initialized_buck.stat.exists
 
 - name: Create buckd symlink
   file: >
@@ -39,4 +55,11 @@
     dest={{ buck_bin_dir }}/buckd
     state=link
   tags: buck
+  when: not initialized_buck.stat.exists
 
+- name: Create .initialized_buck lock file
+  file:
+    path: "{{ ansible_env.HOME }}/.config/ansible/.initialized_buck"
+    state: touch
+  become: true
+  when: not initialized_buck.stat.exists
