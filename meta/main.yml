@@ -1,14 +1,17 @@
 ---
+dependencies: []
 galaxy_info:
   author: David Pursehouse
   description: Installs Buck
   company:
   license: MIT
-  min_ansible_version: 1.4
+  min_ansible_version: "1.4"
+  galaxy_tags:
+    - buck2
+    - development
   platforms:
-  - name: Ubuntu
-    versions:
-    - trusty
-  categories:
-  - development
-dependencies: []
+    - name: Ubuntu
+      versions:
+        - trusty
+        - focal
+  role_name: kirklatslalom.ansible_role_buck
