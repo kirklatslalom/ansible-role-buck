@@ -3,57 +3,59 @@
 - name: Ensure initialization directory exists.
   ansible.builtin.file:
     dest: "{{ ansible_env.HOME }}/.config/ansible/"
-    mode: 0700
+    mode: "0700"
     owner: "{{ ansible_env.USER }}"
     state: directory
 
 - name: Check if initialization has been done
-  stat:
+  ansible.builtin.stat:
     path: "{{ ansible_env.HOME }}/.config/ansible/.initialized_buck"
   register: initialized_buck
 
 - name: Create Buck installation directory
-  ansible.builtin.file: >
+  ansible.builtin.file:
     path: "{{ buck_installation_dir }}"
     state: directory
+    mode: "0744"
   tags: buck
   when: not initialized_buck.stat.exists
 
 - name: Clone Buck
-  ansible.builtin.git: >
+  ansible.builtin.git:
     repo: "{{ buck_repository_url }}"
     dest: "{{ buck_installation_dir }}"
     version: "{{ buck_revision }}"
     accept_hostkey: true
-#  tags: buck
+  tags: buck
   when: not initialized_buck.stat.exists
 
 - name: Build Buck
-  ansible.builtin.command: >
+  ansible.builtin.command:
     ant clean default
-    chdir: "{{ buck_installation_dir }}"
+  chdir: "{{ buck_installation_dir }}"
   tags: buck
   when: not initialized_buck.stat.exists
 
 - name: Create Buck bin directory
-  ansible.builtin.file: >
+  ansible.builtin.file:
     path: "{{ buck_bin_dir }}"
     state: directory
+    mode: "0744"
   tags: buck
   when: not initialized_buck.stat.exists
 
 - name: Create buck symlink
-  ansible.builtin.file: >
-    src:   "{{ buck_installation_dir }}/bin/buck"
-    dest:  "{{ buck_bin_dir }}/buck"
+  ansible.builtin.file:
+    src: "{{ buck_installation_dir }}/bin/buck"
+    dest: "{{ buck_bin_dir }}/buck"
     state: link
   tags: buck
   when: not initialized_buck.stat.exists
 
 - name: Create buckd symlink
-  ansible.builtin.file: >
-    src:   "{{ buck_installation_dir }}/bin/buckd"
-    dest:  "{{ buck_bin_dir }}/buckd"
+  ansible.builtin.file:
+    src: "{{ buck_installation_dir }}/bin/buckd"
+    dest: "{{ buck_bin_dir }}/buckd"
     state: link
   tags: buck
   when: not initialized_buck.stat.exists
@@ -62,5 +64,6 @@
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.config/ansible/.initialized_buck"
     state: touch
+    mode: "0744"
   become: true
   when: not initialized_buck.stat.exists
