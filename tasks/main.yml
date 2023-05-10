@@ -43,7 +43,8 @@
 
 - name: Build Buck
   ansible.builtin.command: cargo install --path=app/buck2
-  chdir: "{{ buck2_installation_dir }}"
+  args:
+    chdir: "{{ buck2_installation_dir }}"
   tags: buck
   when: not initialized_buck.stat.exists
 
