@@ -64,7 +64,7 @@
     state: link
   tags: buck
   when: not initialized_buck.stat.exists
-
+  ignore_errors: true
 
 - name: Create buckd symlink
   ansible.builtin.file:
