@@ -32,7 +32,7 @@
 
 - name: Build Buck
   ansible.builtin.command:
-    ant clean default
+    cargo install --path=app/buck2
   chdir: "{{ buck_installation_dir }}"
   tags: buck
   when: not initialized_buck.stat.exists

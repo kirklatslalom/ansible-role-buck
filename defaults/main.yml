@@ -1,7 +1,7 @@
 ---
 # default vars file for Buck
 
-buck_repository_url: https://github.com/facebook/buck
-buck_installation_dir: ~/buck
+buck_repository_url: https://github.com/facebook/buck2
+buck_installation_dir: ~/buck2
 buck_revision: master
 buck_bin_dir: ~/bin
