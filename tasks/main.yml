@@ -1,5 +1,16 @@
 ---
 # tasks file for Buck
+- name: Install packages
+  ansible.builtin.apt:
+    state: present
+    force_apt_get: true
+    pkg:
+      - python3-pip
+      - npm
+      - cargo
+      - ant
+  become: true
+
 - name: Ensure initialization directory exists.
   ansible.builtin.file:
     dest: "{{ ansible_env.HOME }}/.config/ansible/"
