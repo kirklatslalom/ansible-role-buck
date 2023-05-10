@@ -25,7 +25,7 @@
 
 - name: Create Buck installation directory
   ansible.builtin.file:
-    path: "{{ buck_installation_dir }}"
+    path: "{{ buck2_installation_dir }}"
     state: directory
     mode: "0744"
   tags: buck
@@ -33,9 +33,9 @@
 
 - name: Clone Buck
   ansible.builtin.git:
-    repo: "{{ buck_repository_url }}"
-    dest: "{{ buck_installation_dir }}"
-    version: "{{ buck_revision }}"
+    repo: "{{ buck2_repository_url }}"
+    dest: "{{ buck2_installation_dir }}"
+    version: "{{ buck2_revision }}"
     accept_hostkey: true
     force: true
   tags: buck
@@ -44,13 +44,13 @@
 - name: Build Buck
   ansible.builtin.command:
     cargo install --path=app/buck2
-  chdir: "{{ buck_installation_dir }}"
+  chdir: "{{ buck2_installation_dir }}"
   tags: buck
   when: not initialized_buck.stat.exists
 
 - name: Create Buck bin directory
   ansible.builtin.file:
-    path: "{{ buck_bin_dir }}"
+    path: "{{ buck2_bin_dir }}"
     state: directory
     mode: "0744"
   tags: buck
@@ -58,16 +58,16 @@
 
 - name: Create buck symlink
   ansible.builtin.file:
-    src: "{{ buck_installation_dir }}/bin/buck"
-    dest: "{{ buck_bin_dir }}/buck"
+    src: "{{ buck2_installation_dir }}/bin/buck"
+    dest: "{{ buck2_bin_dir }}/buck"
     state: link
   tags: buck
   when: not initialized_buck.stat.exists
 
 - name: Create buckd symlink
   ansible.builtin.file:
-    src: "{{ buck_installation_dir }}/bin/buckd"
-    dest: "{{ buck_bin_dir }}/buckd"
+    src: "{{ buck2_installation_dir }}/bin/buckd"
+    dest: "{{ buck2_bin_dir }}/buckd"
     state: link
   tags: buck
   when: not initialized_buck.stat.exists
