@@ -6,6 +6,7 @@
     force_apt_get: true
     pkg:
       - curl
+      - build-essential
   become: true
 
 - name: Retrive rustup
@@ -15,8 +16,13 @@
     mode: "0700"
 
 - name: Install rustup # noqa no-changed-when
-  ansible.builtin.command: ./rustup.sh
+  ansible.builtin.command: ./rustup.sh -q -y
 
+- name: Install nightly-2023-03-07
+  ansible.builtin.command: $HOME/.cargo/bin/rustup install nightly-2023-03-07
+
+- name: Cargo the nightly
+  ansible.builtin.command: $HOME/.cargo/bin/cargo +nightly-2023-03-07 install --git https://github.com/facebook/buck2.git buck2
 
 # - name: Install packages
 #  ansible.builtin.apt:
