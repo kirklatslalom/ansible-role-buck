@@ -26,6 +26,7 @@
     dest: "{{ buck_installation_dir }}"
     version: "{{ buck_revision }}"
     accept_hostkey: true
+    force: true
   tags: buck
   when: not initialized_buck.stat.exists
 
