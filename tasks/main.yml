@@ -47,6 +47,7 @@
     chdir: "{{ buck2_installation_dir }}"
   tags: buck
   when: not initialized_buck.stat.exists
+  ignore_errors: true
 
 - name: Create Buck bin directory
   ansible.builtin.file:
