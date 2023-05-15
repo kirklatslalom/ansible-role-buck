@@ -21,9 +21,9 @@
 - name: Install nightly-2023-03-07
   ansible.builtin.command: $HOME/.cargo/bin/rustup install nightly-2023-03-07
 
-- name: Mkdir $HOME/bin
+- name: Mkdir ./bin
   ansible.builtin.file:
-  path: $HOME/bin
+  path: ./bin
   state: directory
   owner: ubuntu
   group: ubuntu
