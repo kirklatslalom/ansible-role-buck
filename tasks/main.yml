@@ -19,9 +19,9 @@
   ansible.builtin.command: ./rustup.sh -q -y
 
 - name: Install nightly-2023-03-07
-  ansible.builtin.command: $HOME/.cargo/bin/rustup install nightly-2023-03-07
+  ansible.builtin.command: ./.cargo/bin/rustup install nightly-2023-03-07
 
-- name: Mkdir ./bin
+- name: Make directory ./bin
   ansible.builtin.file:
   path: ./bin
   state: directory
