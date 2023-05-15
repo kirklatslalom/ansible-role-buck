@@ -40,3 +40,4 @@
 - name: Run buck2 install script
   ansible.builtin.script:
     cmd: /home/ubuntu/bin/buck.sh
+    remote_src: true
