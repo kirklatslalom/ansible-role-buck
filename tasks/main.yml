@@ -21,13 +21,13 @@
 - name: Install nightly-2023-03-07
   ansible.builtin.command: ./.cargo/bin/rustup install nightly-2023-03-07
 
-- name: Make directory bin
+- name: Make bin directory
   ansible.builtin.file:
-    path: bin
+    path: /home/ubuntu/bin
     state: directory
     owner: ubuntu
     group: ubuntu
-    mode: "0744:"
+    mode: "0740"
 
 - name: Copy over buck2 install script
   ansible.builtin.copy:
@@ -35,7 +35,7 @@
     dest: bin/buck.sh
     owner: ubuntu
     group: ubuntu
-    mode: '0744'
+    mode: '0740'
 
 - name: Run buck2 install script
   ansible.builtin.script:
