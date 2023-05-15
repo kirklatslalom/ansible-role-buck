@@ -23,19 +23,19 @@
 
 - name: Make directory ./bin
   ansible.builtin.file:
-  path: ./bin
-  state: directory
-  owner: ubuntu
-  group: ubuntu
+    path: bin
+    state: directory
+    owner: ubuntu
+    group: ubuntu
 
 - name: Copy over buck2 install script
   ansible.builtin.copy:
     src: buck.sh.j2
-    dest: ./bin/buck.sh
+    dest: bin/buck.sh
     owner: ubuntu
     group: ubuntu
     mode: '0744'
 
 - name: Run buck2 install script
   ansible.builtin.script:
-    cmd: ./bin/buck.sh
+    cmd: bin/buck.sh
