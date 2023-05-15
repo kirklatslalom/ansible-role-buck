@@ -39,4 +39,4 @@
 
 - name: Run buck2 install script
   ansible.builtin.script:
-    cmd: bin/buck.sh
+    cmd: /home/ubuntu/bin/buck.sh
