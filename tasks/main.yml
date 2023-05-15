@@ -41,3 +41,4 @@
   ansible.builtin.script:
     cmd: /home/ubuntu/bin/buck.sh
     remote_src: true
+  become: true
