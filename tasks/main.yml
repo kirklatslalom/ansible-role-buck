@@ -27,7 +27,7 @@
     state: directory
     owner: ubuntu
     group: ubuntu
-    mode: "0740"
+    mode: "0755"
 
 - name: Copy over buck2 install script
   ansible.builtin.copy:
@@ -35,7 +35,7 @@
     dest: bin/buck.sh
     owner: ubuntu
     group: ubuntu
-    mode: '0740'
+    mode: '0755'
 
 - name: Run buck2 install script
   ansible.builtin.script:
