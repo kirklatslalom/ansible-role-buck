@@ -38,7 +38,4 @@
     mode: '0755'
 
 - name: Run buck2 install script
-  ansible.builtin.script:
-    cmd: /home/ubuntu/bin/buck.sh
-  remote_src: true
-  become: true
+  ansible.builtin.command: /home/ubuntu/bin/buck.sh
