@@ -21,88 +21,21 @@
 - name: Install nightly-2023-03-07
   ansible.builtin.command: $HOME/.cargo/bin/rustup install nightly-2023-03-07
 
-- name: Cargo the nightly
-  ansible.builtin.command: $HOME/.cargo/bin/cargo +nightly-2023-03-07 install --git https://github.com/facebook/buck2.git buck2
+- name: Mkdir $HOME/bin
+  ansible.builtin.file:
+  path: $HOME/bin
+  state: directory
+  owner: ubuntu
+  group: ubuntu
 
-# - name: Install packages
-#  ansible.builtin.apt:
-#    state: present
-#    force_apt_get: true
-#    pkg:
-#      - python3-pip
-#      - npm
-#      - cargo
-#      - ant
-#  become: true
-#
-# - name: Ensure initialization directory exists.
-#  ansible.builtin.file:
-#    dest: "{{ ansible_env.HOME }}/.config/ansible/"
-#    mode: "0700"
-#    owner: "{{ ansible_env.USER }}"
-#    state: directory
-#
-# - name: Check if initialization has been done
-#  ansible.builtin.stat:
-#    path: "{{ ansible_env.HOME }}/.config/ansible/.initialized_buck"
-#  register: initialized_buck
-#
-# - name: Create Buck installation directory
-#  ansible.builtin.file:
-#    path: "{{ buck2_installation_dir }}"
-#    state: directory
-#    mode: "0744"
-#  tags: buck
-#  when: not initialized_buck.stat.exists
-#
-# - name: Clone Buck
-#  ansible.builtin.git:
-#    repo: "{{ buck2_repository_url }}"
-#    dest: "{{ buck2_installation_dir }}"
-#    version: "{{ buck2_revision }}"
-#    accept_hostkey: true
-#    force: true
-#  tags: buck
-#  when: not initialized_buck.stat.exists
-#
-# - name: Build Buck
-#  ansible.builtin.command: cargo install --path=app/buck2
-#  args:
-#    chdir: "{{ buck2_installation_dir }}"
-#  tags: buck
-#  when: not initialized_buck.stat.exists
-#  ignore_errors: true
-#
-# - name: Create Buck bin directory
-#  ansible.builtin.file:
-#    path: "{{ buck2_bin_dir }}"
-#    state: directory
-#    mode: "0744"
-#  tags: buck
-#  when: not initialized_buck.stat.exists
-#
-# - name: Create buck symlink
-#  ansible.builtin.file:
-#    src: "{{ buck2_installation_dir }}/bin/buck"
-#    dest: "{{ buck2_bin_dir }}/buck"
-#    state: link
-#  tags: buck
-#  when: not initialized_buck.stat.exists
-#  ignore_errors: true
-#
-# - name: Create buckd symlink
-#  ansible.builtin.file:
-#    src: "{{ buck2_installation_dir }}/bin/buckd"
-#    dest: "{{ buck2_bin_dir }}/buckd"
-#    state: link
-#  tags: buck
-#  when: not initialized_buck.stat.exists
-#  ignore_errors: true
-#
-# - name: Create .initialized_buck lock file
-#  ansible.builtin.file:
-#    path: "{{ ansible_env.HOME }}/.config/ansible/.initialized_buck"
-#    state: touch
-#    mode: "0744"
-#  become: true
-#  when: not initialized_buck.stat.exists
+- name: Copy over buck2 install script
+  ansible.builtin.copy:
+    src: buck.sh.j2
+    dest: ./bin/buck.sh
+    owner: ubuntu
+    group: ubuntu
+    mode: '0744'
+
+- name: Run buck2 install script
+  ansible.builtin.script:
+    cmd: ./bin/buck.sh
