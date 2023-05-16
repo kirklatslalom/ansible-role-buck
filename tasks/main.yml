@@ -36,6 +36,3 @@
     owner: ubuntu
     group: ubuntu
     mode: '0755'
-
-- name: Run buck2 install script
-  ansible.builtin.command: /home/ubuntu/bin/buck.sh
